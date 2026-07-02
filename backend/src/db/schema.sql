@@ -293,7 +293,8 @@ do $$
 declare t text;
 begin
   foreach t in array array['organizations','memberships','categories','products','customers','suppliers',
-                           'purchases','sales','purchase_items','sales_items','activity_logs','users']
+                           'purchases','sales','purchase_items','sales_items','activity_logs','users',
+                           'payments','reviews','site_content']
   loop
     execute format('alter table public.%I enable row level security;', t);
   end loop;
@@ -312,7 +313,7 @@ create policy p_memberships on public.memberships using (public.is_org_member(or
 do $$
 declare t text;
 begin
-  foreach t in array array['categories','products','customers','suppliers','purchases','sales','activity_logs']
+  foreach t in array array['categories','products','customers','suppliers','purchases','sales','activity_logs','payments','reviews']
   loop
     execute format('drop policy if exists p_%1$s_org on public.%1$s;', t);
     execute format($p$create policy p_%1$s_org on public.%1$s
@@ -320,6 +321,9 @@ begin
                      with check (public.is_org_member(organization_id));$p$, t);
   end loop;
 end $$;
+
+-- site_content has no organization_id and is only ever touched by the backend
+-- (super admin). RLS on + no policy = the anon/public REST role is denied.
 
 drop policy if exists p_purchase_items on public.purchase_items;
 create policy p_purchase_items on public.purchase_items
