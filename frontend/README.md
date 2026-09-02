@@ -1,6 +1,6 @@
-# AgroJatra ERP — Frontend
+# Panovia — Frontend
 
-Modern SaaS dashboard for AgroJatra ERP. Built with **React 19 + Vite +
+Modern SaaS dashboard for Panovia. Built with **React 19 + Vite +
 TypeScript**, styled with **Tailwind CSS** and shadcn-style UI primitives.
 
 ## Stack

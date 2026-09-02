@@ -1,9 +1,9 @@
-import { supabase } from './supabase';
+import { clearAuth, getToken } from './authClient';
 
 const BASE_URL = import.meta.env.VITE_API_URL as string;
 
 /** localStorage key holding the active organization id (sent as x-org-id). */
-export const ORG_KEY = 'agrojatra-org';
+export const ORG_KEY = 'panovia-org';
 export const getActiveOrg = () => localStorage.getItem(ORG_KEY);
 export const setActiveOrgId = (id: string | null) => {
   if (id) localStorage.setItem(ORG_KEY, id);
@@ -21,8 +21,7 @@ export class ApiError extends Error {
 }
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const { data } = await supabase.auth.getSession();
-  const token = data.session?.access_token;
+  const token = getToken();
   const org = getActiveOrg();
 
   const res = await fetch(`${BASE_URL}${path}`, {
@@ -39,6 +38,9 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const payload = isJson ? await res.json() : null;
 
   if (!res.ok) {
+    // An expired or rejected token ends the session everywhere at once — the
+    // auth store listens for this and sends the user back to sign-in.
+    if (res.status === 401 && token) clearAuth();
     throw new ApiError(res.status, payload?.error ?? res.statusText, payload?.details);
   }
   return payload as T;

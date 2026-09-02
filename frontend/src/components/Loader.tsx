@@ -16,7 +16,7 @@ export function Spinner({ className }: { className?: string }) {
 }
 
 /**
- * Branded loader for AgroJatra ERP — the name means "forward journey / progress",
+ * Branded loader for Panovia — the name reads "all ways through one path",
  * so the mark is an upward arrow climbing inside a rotating progress ring.
  */
 export function BrandLoader({

@@ -1,6 +1,10 @@
 node_modules
 dist
-.env
-.env.local
 *.log
 .DS_Store
+
+# Env files: ignore them all (they hold live credentials, and local .bak
+# copies hold old ones); only the placeholder template is committed.
+.env
+.env.*
+!.env.example

@@ -1,4 +1,4 @@
-# AgroJatra ERP — Roles, Routes & API Access
+# Panovia — Roles, Routes & API Access
 
 This document describes the **5 system roles**, what each can do, and exactly
 which **frontend routes** and **backend API endpoints** each role may access.

@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { PasswordInput } from '@/components/ui/password-input';
-import { supabase } from '@/lib/supabase';
+import { api } from '@/lib/api';
 import { AuthShell } from './LoginPage';
 
 export function ResetPasswordPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const token = params.get('token');
   const [pw, setPw] = useState({ a: '', b: '' });
   const [loading, setLoading] = useState(false);
 
@@ -18,12 +20,31 @@ export function ResetPasswordPage() {
     e.preventDefault();
     if (pw.a !== pw.b) return toast.error(t('auth.reset.mismatch'));
     setLoading(true);
-    const { error } = await supabase.auth.updateUser({ password: pw.a });
-    setLoading(false);
-    if (error) return toast.error(error.message);
-    await supabase.auth.signOut();
-    navigate('/login');
+    try {
+      await api.post('/auth/reset-password', { token, password: pw.a });
+      toast.success(t('auth.reset.done'));
+      navigate('/login');
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : t('auth.reset.invalidLink'));
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // Reaching this page without the emailed token means the link was mistyped,
+  // already used, or opened from somewhere other than the email.
+  if (!token) {
+    return (
+      <AuthShell title={t('auth.reset.title')} subtitle={t('auth.reset.subtitle')}>
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-5 text-center text-sm text-slate-700">
+          {t('auth.reset.invalidLink')}
+        </div>
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          <Link to="/forgot-password" className="font-medium text-primary hover:underline">{t('auth.reset.requestNew')}</Link>
+        </p>
+      </AuthShell>
+    );
+  }
 
   return (
     <AuthShell title={t('auth.reset.title')} subtitle={t('auth.reset.subtitle')}>

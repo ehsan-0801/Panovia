@@ -1,6 +1,6 @@
 # Project Overview
 
-# AgroJatra ERP
+# Panovia
 
 ## Vision
 

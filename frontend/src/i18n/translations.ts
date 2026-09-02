@@ -3,7 +3,7 @@
 
 export const en = {
   common: {
-    appName: 'AgroJatra ERP',
+    appName: 'Panovia',
     signIn: 'Sign in', signOut: 'Sign out', logout: 'Logout', goToDashboard: 'Go to Dashboard',
     dashboard: 'Dashboard', save: 'Save', saveChanges: 'Save changes', cancel: 'Cancel',
     add: 'Add', edit: 'Edit', delete: 'Delete', view: 'View', search: 'Search', export: 'Export',
@@ -70,7 +70,7 @@ export const en = {
       },
     },
     why: {
-      eyebrow: 'Why AgroJatra', title: 'Built for clarity, speed and trust',
+      eyebrow: 'Why Panovia', title: 'Built for clarity, speed and trust',
       subtitle: 'Every detail is designed so you spend less time on data entry and more time growing.',
       benefits: {
         stock: { t: 'Automatic stock movements', d: 'Purchases increase stock, sales decrease it — never below zero, validated in real time.' },
@@ -96,17 +96,17 @@ export const en = {
         { q: 'Can I upload images?', a: 'Yes — add a logo for your organization and images for your products and categories. Reports also export to CSV.' },
       ],
     },
-    showcase: { eyebrow: 'Products', title: 'Products you can manage', subtitle: 'A glimpse of the kinds of products businesses track and sell with AgroJatra.' },
+    showcase: { eyebrow: 'Products', title: 'Products you can manage', subtitle: 'A glimpse of the kinds of products businesses track and sell with Panovia.' },
     cta: { title: 'Start running your business today', subtitle: 'Create your organization for free and invite your team in minutes — no setup headaches.', button: 'Create your organization' },
   },
   footer: {
     tagline: 'Everything Your Business Needs in One Place.',
     product: 'Product', company: 'Company', access: 'Access',
-    rights: '© {{year}} AgroJatra ERP. Made for businesses in Bangladesh and beyond.',
+    rights: '© {{year}} Panovia. Made for businesses in Bangladesh and beyond.',
   },
   features: {
     title: 'Features', subtitle: 'Everything you need to run and grow your business — in one platform.',
-    cta: 'Start using AgroJatra ERP',
+    cta: 'Start using Panovia',
     sections: {
       dashboard: { t: 'Smart Dashboard', p: ['8 real-time KPIs', 'Sales & purchase trends', 'Top selling products', 'Recent activity feed'] },
       products: { t: 'Product Management', p: ['SKU & barcode tracking', 'Purchase & selling prices', 'Stock & min-stock alerts', 'Search, filter, paginate'] },
@@ -120,19 +120,19 @@ export const en = {
     },
   },
   about: {
-    title: 'About AgroJatra ERP',
-    intro: '<strong>AgroJatra</strong> symbolizes a journey of growth and progress. Inspired by the Bengali word “অগ্রযাত্রা” (forward journey), our platform is built to help businesses across every industry move forward.',
+    title: 'About Panovia',
+    intro: '<strong>Panovia</strong> comes from <em>pan-</em> (all) and <em>via</em> (way) — every part of your business running through one path. Stock, sales, purchasing, customers and accounts stop living in separate places and start moving together.',
     mission: { t: 'Our Mission', d: 'Empower small and medium businesses with affordable, modern software that was once only available to large enterprises.' },
     vision: { t: 'Our Vision', d: 'Become the go-to operating system for growing businesses across Bangladesh and beyond.' },
     values: { t: 'Our Values', d: 'Simplicity, reliability and accessibility — software that respects your time and your customers.' },
     storyTitle: 'Our story',
     story: [
-      'Many businesses still run on paper ledgers and scattered spreadsheets. AgroJatra ERP was created to change that — bringing inventory, purchasing, sales, customers, suppliers, reporting and analytics together into one centralized, easy-to-use platform.',
-      'We focus on a clean, minimal, dashboard-first experience that works on any device, with role-based access and your data protected at every layer. Whether you run a shop, a wholesale operation, or a growing distribution business, AgroJatra ERP grows with you.',
+      'Many businesses still run on paper ledgers and scattered spreadsheets. Panovia was created to change that — bringing inventory, purchasing, sales, customers, suppliers, reporting and analytics together into one centralized, easy-to-use platform.',
+      'We focus on a clean, minimal, dashboard-first experience that works on any device, with role-based access and your data protected at every layer. Whether you run a shop, a wholesale operation, or a growing distribution business, Panovia grows with you.',
     ],
   },
   contact: {
-    title: 'Get in touch', subtitle: "Questions about AgroJatra ERP? We'd love to hear from you.",
+    title: 'Get in touch', subtitle: "Questions about Panovia? We'd love to hear from you.",
     info: 'Contact information', name: 'Name', email: 'Email', phone: 'Phone', location: 'Location',
     subject: 'Subject', message: 'Message',
     send: 'Send message', sentTitle: 'Message sent 🎉', sentBody: "Thank you for reaching out. We'll be in touch shortly.",
@@ -145,7 +145,7 @@ export const en = {
       h1: 'Real-time inventory & stock control', h2: 'Sales, purchases & instant invoicing', h3: 'Role-based access for your whole team',
       trusted: 'Built for businesses in Bangladesh',
     },
-    login: { title: 'Welcome back', subtitle: 'Sign in to your AgroJatra ERP account', email: 'Email', password: 'Password', forgot: 'Forgot password?', signingIn: 'Signing in…', signIn: 'Sign in', noAccount: "Don't have an account?", createOne: 'Create one' },
+    login: { title: 'Welcome back', subtitle: 'Sign in to your Panovia account', email: 'Email', password: 'Password', forgot: 'Forgot password?', signingIn: 'Signing in…', signIn: 'Sign in', noAccount: "Don't have an account?", createOne: 'Create one' },
     register: {
       openTitle: 'Create the admin account', openSubtitle: "Set up your organization's first (Admin) account",
       fullName: 'Full name', email: 'Email', password: 'Password', create: 'Create admin account', creating: 'Creating…',
@@ -155,7 +155,7 @@ export const en = {
       goSignIn: 'Go to sign in',
     },
     forgot: { title: 'Reset your password', subtitle: "We'll email you a secure reset link", email: 'Email', send: 'Send reset link', sent: 'Check your inbox for a password reset link.', back: 'Back to sign in' },
-    reset: { title: 'Set a new password', subtitle: 'Choose a strong password for your account', newPassword: 'New password', confirm: 'Confirm password', update: 'Update password', updating: 'Updating…', back: 'Back to sign in', mismatch: 'Passwords do not match' },
+    reset: { title: 'Set a new password', subtitle: 'Choose a strong password for your account', newPassword: 'New password', confirm: 'Confirm password', update: 'Update password', updating: 'Updating…', back: 'Back to sign in', mismatch: 'Passwords do not match', done: 'Password updated — sign in with your new password', invalidLink: 'This reset link is invalid or has expired. Request a new one to continue.', requestNew: 'Request a new link' },
   },
   dashboard: {
     greetingMorning: 'Good morning', greetingAfternoon: 'Good afternoon', greetingEvening: 'Good evening',
@@ -183,8 +183,8 @@ export const en = {
     upload: 'Upload image', change: 'Change image', uploading: 'Uploading…', hint: 'PNG or JPG. Uploaded when you save.',
   },
   review: {
-    tab: 'Review', title: 'Rate AgroJatra', subtitle: 'Share a short review — it appears as a testimonial on the public homepage.',
-    rating: 'Rating', comment: 'Your review', placeholder: 'What do you like about AgroJatra?', save: 'Save review', saved: 'Review saved', empty: 'Please write a short review',
+    tab: 'Review', title: 'Rate Panovia', subtitle: 'Share a short review — it appears as a testimonial on the public homepage.',
+    rating: 'Rating', comment: 'Your review', placeholder: 'What do you like about Panovia?', save: 'Save review', saved: 'Review saved', empty: 'Please write a short review',
   },
   onboarding: {
     title: 'Create your organization', subtitle: 'Set up your workspace to get started. You can invite up to 5 members.',
@@ -205,7 +205,7 @@ export const en = {
       fields: 'fields', saved: 'Website content saved', resetConfirm: 'Reset all page text to the built-in defaults?', resetDone: 'Reset to defaults',
       tabs: { text: 'Page Text', products: 'Homepage Products' },
       addImage: 'Add image', productName: 'Product name (optional)', noProducts: 'No product images yet. Add some to feature them on the homepage.',
-      productsHint: 'Upload product images to showcase on the public homepage — these highlight the kinds of products managed in AgroJatra.',
+      productsHint: 'Upload product images to showcase on the public homepage — these highlight the kinds of products managed in Panovia.',
       productsSaved: 'Homepage products saved',
     },
     overview: { title: 'Platform Overview', subtitle: 'Activity across every organization', organizations: 'Organizations', users: 'Users', products: 'Products', sales: 'Sales', revenue: 'Total Revenue' },
@@ -218,7 +218,7 @@ export const en = {
 
 export const bn: typeof en = {
   common: {
-    appName: 'AgroJatra ERP',
+    appName: 'Panovia',
     signIn: 'সাইন ইন', signOut: 'সাইন আউট', logout: 'লগআউট', goToDashboard: 'ড্যাশবোর্ডে যান',
     dashboard: 'ড্যাশবোর্ড', save: 'সংরক্ষণ', saveChanges: 'পরিবর্তন সংরক্ষণ করুন', cancel: 'বাতিল',
     add: 'যোগ করুন', edit: 'সম্পাদনা', delete: 'মুছুন', view: 'দেখুন', search: 'খুঁজুন', export: 'এক্সপোর্ট',
@@ -285,7 +285,7 @@ export const bn: typeof en = {
       },
     },
     why: {
-      eyebrow: 'কেন অ্যাগ্রোজাত্রা', title: 'স্বচ্ছতা, গতি ও আস্থার জন্য তৈরি',
+      eyebrow: 'কেন প্যানোভিয়া', title: 'স্বচ্ছতা, গতি ও আস্থার জন্য তৈরি',
       subtitle: 'প্রতিটি খুঁটিনাটি এমনভাবে সাজানো যাতে কম সময় ডেটা এন্ট্রিতে, বেশি সময় ব্যবসা বাড়াতে।',
       benefits: {
         stock: { t: 'স্বয়ংক্রিয় স্টক পরিবর্তন', d: 'ক্রয়ে স্টক বাড়ে, বিক্রয়ে কমে — কখনো শূন্যের নিচে নয়, রিয়েল-টাইমে যাচাই।' },
@@ -311,17 +311,17 @@ export const bn: typeof en = {
         { q: 'আমি কি ছবি আপলোড করতে পারি?', a: 'হ্যাঁ — প্রতিষ্ঠানের লোগো এবং পণ্য ও ক্যাটাগরির ছবি যোগ করুন। রিপোর্টও সিএসভি-তে এক্সপোর্ট করা যায়।' },
       ],
     },
-    showcase: { eyebrow: 'পণ্য', title: 'যেসব পণ্য আপনি পরিচালনা করতে পারবেন', subtitle: 'AgroJatra দিয়ে ব্যবসাগুলো যে ধরনের পণ্য ট্র্যাক ও বিক্রি করে তার একটি ঝলক।' },
+    showcase: { eyebrow: 'পণ্য', title: 'যেসব পণ্য আপনি পরিচালনা করতে পারবেন', subtitle: 'Panovia দিয়ে ব্যবসাগুলো যে ধরনের পণ্য ট্র্যাক ও বিক্রি করে তার একটি ঝলক।' },
     cta: { title: 'আজই আপনার ব্যবসা শুরু করুন', subtitle: 'বিনামূল্যে আপনার প্রতিষ্ঠান তৈরি করুন এবং কয়েক মিনিটেই টিমকে যুক্ত করুন।', button: 'আপনার প্রতিষ্ঠান তৈরি করুন' },
   },
   footer: {
     tagline: 'আপনার ব্যবসার সব প্রয়োজন এক জায়গায়।',
     product: 'প্রোডাক্ট', company: 'কোম্পানি', access: 'অ্যাক্সেস',
-    rights: '© {{year}} AgroJatra ERP. বাংলাদেশ ও এর বাইরের ব্যবসার জন্য তৈরি।',
+    rights: '© {{year}} Panovia. বাংলাদেশ ও এর বাইরের ব্যবসার জন্য তৈরি।',
   },
   features: {
     title: 'ফিচার', subtitle: 'ব্যবসা পরিচালনা ও বৃদ্ধির জন্য প্রয়োজনীয় সবকিছু — এক প্ল্যাটফর্মে।',
-    cta: 'অ্যাগ্রোজাত্রা ইআরপি ব্যবহার শুরু করুন',
+    cta: 'প্যানোভিয়া ইআরপি ব্যবহার শুরু করুন',
     sections: {
       dashboard: { t: 'স্মার্ট ড্যাশবোর্ড', p: ['৮টি রিয়েল-টাইম কেপিআই', 'বিক্রয় ও ক্রয়ের ট্রেন্ড', 'সর্বাধিক বিক্রিত পণ্য', 'সাম্প্রতিক কার্যকলাপ'] },
       products: { t: 'পণ্য ব্যবস্থাপনা', p: ['এসকেইউ ও বারকোড ট্র্যাকিং', 'ক্রয় ও বিক্রয় মূল্য', 'স্টক ও কম-স্টক সতর্কতা', 'খোঁজা, ফিল্টার, পেজিনেশন'] },
@@ -335,19 +335,19 @@ export const bn: typeof en = {
     },
   },
   about: {
-    title: 'অ্যাগ্রোজাত্রা ইআরপি সম্পর্কে',
-    intro: '<strong>অ্যাগ্রোজাত্রা</strong> বৃদ্ধি ও অগ্রগতির এক যাত্রার প্রতীক। বাংলা শব্দ “অগ্রযাত্রা” থেকে অনুপ্রাণিত হয়ে আমাদের প্ল্যাটফর্মটি প্রতিটি শিল্পের ব্যবসাকে এগিয়ে নিতে তৈরি।',
+    title: 'প্যানোভিয়া ইআরপি সম্পর্কে',
+    intro: '<strong>প্যানোভিয়া</strong> নামটি এসেছে <em>pan-</em> (সব) ও <em>via</em> (পথ) থেকে — আপনার ব্যবসার প্রতিটি অংশ এক পথে চলে। স্টক, বিক্রি, ক্রয়, ক্রেতা ও হিসাব আলাদা জায়গায় না থেকে একসাথে চলে।',
     mission: { t: 'আমাদের লক্ষ্য', d: 'ছোট ও মাঝারি ব্যবসাকে সাশ্রয়ী, আধুনিক সফটওয়্যার দেওয়া যা একসময় শুধু বড় প্রতিষ্ঠানের জন্য ছিল।' },
     vision: { t: 'আমাদের দৃষ্টিভঙ্গি', d: 'বাংলাদেশ ও এর বাইরে বর্ধনশীল ব্যবসার প্রধান অপারেটিং সিস্টেম হয়ে ওঠা।' },
     values: { t: 'আমাদের মূল্যবোধ', d: 'সরলতা, নির্ভরযোগ্যতা ও সহজলভ্যতা — এমন সফটওয়্যার যা আপনার সময় ও গ্রাহককে সম্মান করে।' },
     storyTitle: 'আমাদের গল্প',
     story: [
-      'অনেক ব্যবসা এখনো কাগজের খাতা ও বিচ্ছিন্ন স্প্রেডশিটে চলে। অ্যাগ্রোজাত্রা ইআরপি তা বদলাতে তৈরি — ইনভেন্টরি, ক্রয়, বিক্রয়, গ্রাহক, সরবরাহকারী, রিপোর্ট ও বিশ্লেষণকে একটি কেন্দ্রীভূত, সহজ প্ল্যাটফর্মে এনে।',
-      'আমরা একটি পরিচ্ছন্ন, ড্যাশবোর্ড-কেন্দ্রিক অভিজ্ঞতার ওপর জোর দিই যা যেকোনো ডিভাইসে চলে, ভূমিকাভিত্তিক অ্যাক্সেস ও প্রতিটি স্তরে সুরক্ষিত ডেটাসহ। দোকান, পাইকারি বা বর্ধনশীল ডিস্ট্রিবিউশন—যাই হোক, অ্যাগ্রোজাত্রা ইআরপি আপনার সাথে বাড়ে।',
+      'অনেক ব্যবসা এখনো কাগজের খাতা ও বিচ্ছিন্ন স্প্রেডশিটে চলে। প্যানোভিয়া ইআরপি তা বদলাতে তৈরি — ইনভেন্টরি, ক্রয়, বিক্রয়, গ্রাহক, সরবরাহকারী, রিপোর্ট ও বিশ্লেষণকে একটি কেন্দ্রীভূত, সহজ প্ল্যাটফর্মে এনে।',
+      'আমরা একটি পরিচ্ছন্ন, ড্যাশবোর্ড-কেন্দ্রিক অভিজ্ঞতার ওপর জোর দিই যা যেকোনো ডিভাইসে চলে, ভূমিকাভিত্তিক অ্যাক্সেস ও প্রতিটি স্তরে সুরক্ষিত ডেটাসহ। দোকান, পাইকারি বা বর্ধনশীল ডিস্ট্রিবিউশন—যাই হোক, প্যানোভিয়া ইআরপি আপনার সাথে বাড়ে।',
     ],
   },
   contact: {
-    title: 'যোগাযোগ করুন', subtitle: 'অ্যাগ্রোজাত্রা ইআরপি নিয়ে প্রশ্ন? আমরা শুনতে আগ্রহী।',
+    title: 'যোগাযোগ করুন', subtitle: 'প্যানোভিয়া ইআরপি নিয়ে প্রশ্ন? আমরা শুনতে আগ্রহী।',
     info: 'যোগাযোগের তথ্য', name: 'নাম', email: 'ইমেইল', phone: 'ফোন', location: 'ঠিকানা',
     subject: 'বিষয়', message: 'বার্তা',
     send: 'বার্তা পাঠান', sentTitle: 'বার্তা পাঠানো হয়েছে 🎉', sentBody: 'যোগাযোগের জন্য ধন্যবাদ। আমরা শীঘ্রই যোগাযোগ করব।',
@@ -360,7 +360,7 @@ export const bn: typeof en = {
       h1: 'রিয়েল-টাইম ইনভেন্টরি ও স্টক নিয়ন্ত্রণ', h2: 'বিক্রয়, ক্রয় ও তাৎক্ষণিক চালান', h3: 'পুরো টিমের জন্য ভূমিকাভিত্তিক অ্যাক্সেস',
       trusted: 'বাংলাদেশের ব্যবসার জন্য তৈরি',
     },
-    login: { title: 'আবার স্বাগতম', subtitle: 'আপনার অ্যাগ্রোজাত্রা ইআরপি অ্যাকাউন্টে সাইন ইন করুন', email: 'ইমেইল', password: 'পাসওয়ার্ড', forgot: 'পাসওয়ার্ড ভুলে গেছেন?', signingIn: 'সাইন ইন হচ্ছে…', signIn: 'সাইন ইন', noAccount: 'অ্যাকাউন্ট নেই?', createOne: 'তৈরি করুন' },
+    login: { title: 'আবার স্বাগতম', subtitle: 'আপনার প্যানোভিয়া ইআরপি অ্যাকাউন্টে সাইন ইন করুন', email: 'ইমেইল', password: 'পাসওয়ার্ড', forgot: 'পাসওয়ার্ড ভুলে গেছেন?', signingIn: 'সাইন ইন হচ্ছে…', signIn: 'সাইন ইন', noAccount: 'অ্যাকাউন্ট নেই?', createOne: 'তৈরি করুন' },
     register: {
       openTitle: 'অ্যাডমিন অ্যাকাউন্ট তৈরি করুন', openSubtitle: 'আপনার প্রতিষ্ঠানের প্রথম (অ্যাডমিন) অ্যাকাউন্ট সেট করুন',
       fullName: 'পুরো নাম', email: 'ইমেইল', password: 'পাসওয়ার্ড', create: 'অ্যাডমিন অ্যাকাউন্ট তৈরি করুন', creating: 'তৈরি হচ্ছে…',
@@ -370,7 +370,7 @@ export const bn: typeof en = {
       goSignIn: 'সাইন ইন-এ যান',
     },
     forgot: { title: 'পাসওয়ার্ড রিসেট করুন', subtitle: 'আমরা আপনাকে একটি নিরাপদ রিসেট লিংক ইমেইল করব', email: 'ইমেইল', send: 'রিসেট লিংক পাঠান', sent: 'পাসওয়ার্ড রিসেট লিংকের জন্য আপনার ইনবক্স দেখুন।', back: 'সাইন ইন-এ ফিরুন' },
-    reset: { title: 'নতুন পাসওয়ার্ড দিন', subtitle: 'আপনার অ্যাকাউন্টের জন্য একটি শক্তিশালী পাসওয়ার্ড বেছে নিন', newPassword: 'নতুন পাসওয়ার্ড', confirm: 'পাসওয়ার্ড নিশ্চিত করুন', update: 'পাসওয়ার্ড হালনাগাদ করুন', updating: 'হালনাগাদ হচ্ছে…', back: 'সাইন ইন-এ ফিরুন', mismatch: 'পাসওয়ার্ড মিলছে না' },
+    reset: { title: 'নতুন পাসওয়ার্ড দিন', subtitle: 'আপনার অ্যাকাউন্টের জন্য একটি শক্তিশালী পাসওয়ার্ড বেছে নিন', newPassword: 'নতুন পাসওয়ার্ড', confirm: 'পাসওয়ার্ড নিশ্চিত করুন', update: 'পাসওয়ার্ড হালনাগাদ করুন', updating: 'হালনাগাদ হচ্ছে…', back: 'সাইন ইন-এ ফিরুন', mismatch: 'পাসওয়ার্ড মিলছে না', done: 'পাসওয়ার্ড হালনাগাদ হয়েছে — নতুন পাসওয়ার্ড দিয়ে সাইন ইন করুন', invalidLink: 'এই লিংকটি অবৈধ বা মেয়াদোত্তীর্ণ। চালিয়ে যেতে নতুন লিংক নিন।', requestNew: 'নতুন লিংক নিন' },
   },
   dashboard: {
     greetingMorning: 'শুভ সকাল', greetingAfternoon: 'শুভ অপরাহ্ন', greetingEvening: 'শুভ সন্ধ্যা',
@@ -398,8 +398,8 @@ export const bn: typeof en = {
     upload: 'ছবি আপলোড করুন', change: 'ছবি পরিবর্তন করুন', uploading: 'আপলোড হচ্ছে…', hint: 'PNG বা JPG। সংরক্ষণ করলে আপলোড হবে।',
   },
   review: {
-    tab: 'রিভিউ', title: 'AgroJatra রেটিং দিন', subtitle: 'একটি সংক্ষিপ্ত রিভিউ দিন — এটি পাবলিক হোমপেজে টেস্টিমোনিয়াল হিসেবে দেখানো হবে।',
-    rating: 'রেটিং', comment: 'আপনার রিভিউ', placeholder: 'AgroJatra-এর কী আপনার ভালো লাগে?', save: 'রিভিউ সংরক্ষণ', saved: 'রিভিউ সংরক্ষিত হয়েছে', empty: 'অনুগ্রহ করে একটি সংক্ষিপ্ত রিভিউ লিখুন',
+    tab: 'রিভিউ', title: 'Panovia রেটিং দিন', subtitle: 'একটি সংক্ষিপ্ত রিভিউ দিন — এটি পাবলিক হোমপেজে টেস্টিমোনিয়াল হিসেবে দেখানো হবে।',
+    rating: 'রেটিং', comment: 'আপনার রিভিউ', placeholder: 'Panovia-এর কী আপনার ভালো লাগে?', save: 'রিভিউ সংরক্ষণ', saved: 'রিভিউ সংরক্ষিত হয়েছে', empty: 'অনুগ্রহ করে একটি সংক্ষিপ্ত রিভিউ লিখুন',
   },
   onboarding: {
     title: 'আপনার প্রতিষ্ঠান তৈরি করুন', subtitle: 'শুরু করতে আপনার ওয়ার্কস্পেস সেট করুন। আপনি সর্বোচ্চ ৫ জন সদস্য যোগ করতে পারবেন।',
@@ -420,7 +420,7 @@ export const bn: typeof en = {
       fields: 'ফিল্ড', saved: 'ওয়েবসাইট কনটেন্ট সংরক্ষিত হয়েছে', resetConfirm: 'সব পেজ টেক্সট ডিফল্টে ফিরিয়ে আনবেন?', resetDone: 'ডিফল্টে ফিরিয়ে আনা হয়েছে',
       tabs: { text: 'পেজ টেক্সট', products: 'হোমপেজ পণ্য' },
       addImage: 'ছবি যোগ করুন', productName: 'পণ্যের নাম (ঐচ্ছিক)', noProducts: 'এখনো কোনো পণ্যের ছবি নেই। হোমপেজে দেখাতে কিছু যোগ করুন।',
-      productsHint: 'পাবলিক হোমপেজে দেখানোর জন্য পণ্যের ছবি আপলোড করুন — এগুলো দেখায় AgroJatra-তে কী ধরনের পণ্য পরিচালিত হয়।',
+      productsHint: 'পাবলিক হোমপেজে দেখানোর জন্য পণ্যের ছবি আপলোড করুন — এগুলো দেখায় Panovia-তে কী ধরনের পণ্য পরিচালিত হয়।',
       productsSaved: 'হোমপেজ পণ্য সংরক্ষিত হয়েছে',
     },
     overview: { title: 'প্ল্যাটফর্ম ওভারভিউ', subtitle: 'সকল প্রতিষ্ঠানের কার্যক্রম', organizations: 'প্রতিষ্ঠান', users: 'ব্যবহারকারী', products: 'পণ্য', sales: 'বিক্রয়', revenue: 'মোট আয়' },

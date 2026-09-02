@@ -10,7 +10,9 @@ const base = {
   selling_price: z.number().nonnegative(),
   stock: z.number().nonnegative().optional(),
   min_stock: z.number().nonnegative().optional(),
-  image_url: z.string().url().optional().nullable(),
+  // Either an uploaded absolute URL (Cloudinary) or a path served by the app
+  // itself, which is how the seeded catalogue pictures are stored.
+  image_url: z.string().regex(/^(https?:\/\/|\/)/, 'Must be a URL or an app path').optional().nullable(),
   status: z.enum(['active', 'inactive']).optional(),
 };
 

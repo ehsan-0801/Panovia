@@ -26,7 +26,7 @@ export const useTheme = create<ThemeState>()(
       },
     }),
     {
-      name: 'agrojatra-theme',
+      name: 'panovia-theme',
       onRehydrateStorage: () => (state) => apply(state?.theme ?? 'system'),
     },
   ),

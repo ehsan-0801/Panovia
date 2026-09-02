@@ -1,26 +1,31 @@
 -- ============================================================================
---  AgroJatra ERP — Database Schema (multi-tenant SaaS)
+--  Panovia — Database Schema (multi-tenant SaaS)
 --  Every business row belongs to an organization. Users join organizations via
 --  memberships (with a role). A platform "super admin" can view all orgs.
---  PostgreSQL (Supabase). Idempotent.
+--  PostgreSQL (Neon). Self-contained: identity lives in public.users, so there
+--  is no dependency on a provider-managed `auth` schema. Idempotent.
 -- ============================================================================
 
 create extension if not exists "pgcrypto";
 
--- One-time migration from the single-organization model: if data tables aren't
--- org-scoped yet (or the old `company` table exists), drop them so they're
--- recreated with organization_id below.
+-- One-time migration from the Supabase-era model: those tables carried foreign
+-- keys into auth.users and a single-organization `company` table, neither of
+-- which exist here. Drop them so everything below is recreated cleanly.
 do $$
 begin
   if exists (select 1 from information_schema.tables where table_schema='public' and table_name='company')
      or not exists (select 1 from information_schema.tables where table_schema='public' and table_name='organizations')
      or not exists (
         select 1 from information_schema.columns
+        where table_schema='public' and table_name='users' and column_name='password_hash')
+     or not exists (
+        select 1 from information_schema.columns
         where table_schema='public' and table_name='products' and column_name='organization_id') then
     drop table if exists
       public.sales_items, public.sales, public.purchase_items, public.purchases,
-      public.products, public.categories, public.customers, public.suppliers,
-      public.activity_logs, public.company cascade;
+      public.payments, public.reviews, public.products, public.categories,
+      public.customers, public.suppliers, public.activity_logs, public.memberships,
+      public.organizations, public.password_reset_tokens, public.users, public.company cascade;
   end if;
 end $$;
 
@@ -28,29 +33,39 @@ create or replace function set_updated_at()
 returns trigger language plpgsql as $$
 begin new.updated_at = now(); return new; end; $$;
 
--- ─── users (profile mirror of auth.users; platform super-admin flag) ────────
+-- ─── users (identity + profile; platform super-admin flag) ──────────────────
 create table if not exists public.users (
-  id             uuid primary key references auth.users(id) on delete cascade,
+  id             uuid primary key default gen_random_uuid(),
   email          text not null,
+  password_hash  text,
   full_name      text,
   phone          text,
   avatar_url     text,
   theme          text not null default 'system',
   is_super_admin boolean not null default false,
+  last_login_at  timestamptz,
   created_at     timestamptz not null default now(),
   updated_at     timestamptz not null default now()
 );
-alter table public.users add column if not exists is_super_admin boolean not null default false;
-alter table public.users add column if not exists phone text;
--- role/status moved to memberships in the multi-tenant model
-alter table public.users drop column if exists role;
-alter table public.users drop column if exists status;
+create unique index if not exists uq_users_email on public.users(lower(email));
+
+-- ─── password reset tokens (single-use, hashed at rest) ─────────────────────
+create table if not exists public.password_reset_tokens (
+  id         uuid primary key default gen_random_uuid(),
+  user_id    uuid not null references public.users(id) on delete cascade,
+  token_hash text not null,
+  expires_at timestamptz not null,
+  used_at    timestamptz,
+  created_at timestamptz not null default now()
+);
+create index if not exists idx_reset_tokens_user on public.password_reset_tokens(user_id);
+create unique index if not exists uq_reset_token_hash on public.password_reset_tokens(token_hash);
 
 -- ─── organizations (the tenant) ─────────────────────────────────────────────
 create table if not exists public.organizations (
   id         uuid primary key default gen_random_uuid(),
   name       text not null,
-  owner_id   uuid not null references auth.users(id) on delete cascade,
+  owner_id   uuid not null references public.users(id) on delete cascade,
   logo_url   text,
   phone      text,
   email      text,
@@ -67,7 +82,7 @@ create index if not exists idx_orgs_owner on public.organizations(owner_id);
 create table if not exists public.memberships (
   id              uuid primary key default gen_random_uuid(),
   organization_id uuid not null references public.organizations(id) on delete cascade,
-  user_id         uuid not null references auth.users(id) on delete cascade,
+  user_id         uuid not null references public.users(id) on delete cascade,
   role            text not null default 'viewer'
                   check (role in ('admin','inventory_manager','sales_manager','accountant','viewer')),
   status          text not null default 'active' check (status in ('active','inactive')),
@@ -85,12 +100,11 @@ create table if not exists public.categories (
   name            text not null,
   description     text,
   image_url       text,
-  created_by      uuid references auth.users(id) on delete set null,
+  created_by      uuid references public.users(id) on delete set null,
   created_at      timestamptz not null default now(),
   updated_at      timestamptz not null default now(),
   deleted_at      timestamptz
 );
-alter table public.categories add column if not exists image_url text;
 create unique index if not exists uq_categories_org_name on public.categories(organization_id, lower(name)) where deleted_at is null;
 create index if not exists idx_categories_org on public.categories(organization_id) where deleted_at is null;
 
@@ -109,7 +123,7 @@ create table if not exists public.products (
   min_stock       numeric(14,2) not null default 0 check (min_stock >= 0),
   image_url       text,
   status          text not null default 'active' check (status in ('active','inactive')),
-  created_by      uuid references auth.users(id) on delete set null,
+  created_by      uuid references public.users(id) on delete set null,
   created_at      timestamptz not null default now(),
   updated_at      timestamptz not null default now(),
   deleted_at      timestamptz,
@@ -130,7 +144,7 @@ create table if not exists public.customers (
   address         text,
   notes           text,
   outstanding_due numeric(14,2) not null default 0,
-  created_by      uuid references auth.users(id) on delete set null,
+  created_by      uuid references public.users(id) on delete set null,
   created_at      timestamptz not null default now(),
   updated_at      timestamptz not null default now(),
   deleted_at      timestamptz
@@ -146,7 +160,7 @@ create table if not exists public.suppliers (
   phone           text,
   address         text,
   notes           text,
-  created_by      uuid references auth.users(id) on delete set null,
+  created_by      uuid references public.users(id) on delete set null,
   created_at      timestamptz not null default now(),
   updated_at      timestamptz not null default now(),
   deleted_at      timestamptz
@@ -158,7 +172,7 @@ create table if not exists public.purchases (
   id              uuid primary key default gen_random_uuid(),
   organization_id uuid not null references public.organizations(id) on delete cascade,
   supplier_id     uuid references public.suppliers(id) on delete set null,
-  created_by      uuid references auth.users(id) on delete set null,
+  created_by      uuid references public.users(id) on delete set null,
   reference       text not null,
   purchase_date   date not null default current_date,
   subtotal        numeric(14,2) not null default 0,
@@ -189,7 +203,7 @@ create table if not exists public.sales (
   id              uuid primary key default gen_random_uuid(),
   organization_id uuid not null references public.organizations(id) on delete cascade,
   customer_id     uuid references public.customers(id) on delete set null,
-  created_by      uuid references auth.users(id) on delete set null,
+  created_by      uuid references public.users(id) on delete set null,
   invoice_no      text not null,
   sale_date       date not null default current_date,
   subtotal        numeric(14,2) not null default 0,
@@ -222,7 +236,7 @@ create index if not exists idx_sales_items_product on public.sales_items(product
 create table if not exists public.activity_logs (
   id              uuid primary key default gen_random_uuid(),
   organization_id uuid references public.organizations(id) on delete cascade,
-  user_id         uuid references auth.users(id) on delete set null,
+  user_id         uuid references public.users(id) on delete set null,
   action          text not null,
   entity          text not null,
   entity_id       uuid,
@@ -242,7 +256,7 @@ create table if not exists public.payments (
   method          text not null default 'cash',
   note            text,
   paid_at         date not null default current_date,
-  created_by      uuid references auth.users(id) on delete set null,
+  created_by      uuid references public.users(id) on delete set null,
   created_at      timestamptz not null default now()
 );
 create index if not exists idx_payments_org on public.payments(organization_id);
@@ -252,7 +266,7 @@ create index if not exists idx_payments_customer on public.payments(customer_id)
 create table if not exists public.reviews (
   id              uuid primary key default gen_random_uuid(),
   organization_id uuid not null references public.organizations(id) on delete cascade,
-  user_id         uuid references auth.users(id) on delete set null,
+  user_id         uuid references public.users(id) on delete set null,
   rating          smallint not null default 5 check (rating between 1 and 5),
   comment         text not null,
   published       boolean not null default true,
@@ -282,52 +296,12 @@ begin
   end loop;
 end $$;
 
--- ─── Row Level Security (defense in depth; API enforces by org + role) ───────
-create or replace function public.is_org_member(org uuid)
-returns boolean language sql security definer stable as $$
-  select exists (select 1 from public.memberships m
-                 where m.organization_id = org and m.user_id = auth.uid() and m.status = 'active');
-$$;
-
-do $$
-declare t text;
-begin
-  foreach t in array array['organizations','memberships','categories','products','customers','suppliers',
-                           'purchases','sales','purchase_items','sales_items','activity_logs','users',
-                           'payments','reviews','site_content']
-  loop
-    execute format('alter table public.%I enable row level security;', t);
-  end loop;
-end $$;
-
-drop policy if exists p_users_self on public.users;
-create policy p_users_self on public.users using (id = auth.uid()) with check (id = auth.uid());
-
-drop policy if exists p_orgs_member on public.organizations;
-create policy p_orgs_member on public.organizations
-  using (public.is_org_member(id) or owner_id = auth.uid()) with check (owner_id = auth.uid());
-
-drop policy if exists p_memberships on public.memberships;
-create policy p_memberships on public.memberships using (public.is_org_member(organization_id));
-
-do $$
-declare t text;
-begin
-  foreach t in array array['categories','products','customers','suppliers','purchases','sales','activity_logs','payments','reviews']
-  loop
-    execute format('drop policy if exists p_%1$s_org on public.%1$s;', t);
-    execute format($p$create policy p_%1$s_org on public.%1$s
-                     using (public.is_org_member(organization_id))
-                     with check (public.is_org_member(organization_id));$p$, t);
-  end loop;
-end $$;
-
--- site_content has no organization_id and is only ever touched by the backend
--- (super admin). RLS on + no policy = the anon/public REST role is denied.
-
-drop policy if exists p_purchase_items on public.purchase_items;
-create policy p_purchase_items on public.purchase_items
-  using (exists (select 1 from public.purchases p where p.id = purchase_id and public.is_org_member(p.organization_id)));
-drop policy if exists p_sales_items on public.sales_items;
-create policy p_sales_items on public.sales_items
-  using (exists (select 1 from public.sales s where s.id = sale_id and public.is_org_member(s.organization_id)));
+-- ─── Access control ─────────────────────────────────────────────────────────
+-- Nothing connects to this database except the API, which owns the single
+-- application role and scopes every query by organization_id plus the role
+-- matrix in src/lib/permissions.ts. The Supabase-era RLS policies were dropped
+-- with the move to Neon: they were written against auth.uid(), which only
+-- exists inside Supabase's PostgREST session, so they can neither be evaluated
+-- nor relied on here. If a direct-from-browser data path is ever added, tenant
+-- isolation has to be re-established with policies driven by a session GUC
+-- (e.g. current_setting('app.user_id')) before that path is opened.

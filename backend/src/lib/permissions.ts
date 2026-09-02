@@ -1,5 +1,5 @@
 // ============================================================================
-//  AgroJatra ERP — Role-Based Access Control (single company, 6 system roles)
+//  Panovia — Role-Based Access Control (per organization, 5 member roles)
 //  This is the single source of truth for the permission matrix. The frontend
 //  mirrors it in src/lib/permissions.ts — keep them in sync.
 // ============================================================================

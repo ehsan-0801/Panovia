@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { z } from 'zod';
 import { query } from '../db/pool.js';
-import { supabaseAdmin } from '../config/supabase.js';
+import { hashPassword } from '../lib/auth.js';
 import { logActivity } from '../lib/activity.js';
 import { requireAuth } from '../middleware/auth.js';
 import { loadContext, requireOrg, requirePermission } from '../middleware/rbac.js';
@@ -59,8 +59,7 @@ settingsRouter.patch('/profile', asyncHandler(async (req, res) => {
 // ── Security (/settings/security) — change own password ─────────────────────
 settingsRouter.patch('/security', asyncHandler(async (req, res) => {
   const { password } = z.object({ password: z.string().min(6) }).parse(req.body);
-  const { error } = await supabaseAdmin.auth.admin.updateUserById(req.user!.id, { password });
-  if (error) throw new Error(error.message);
+  await query('update public.users set password_hash=$2 where id=$1', [req.user!.id, await hashPassword(password)]);
   await logActivity({ organizationId: req.ctx?.orgId ?? null, userId: req.user!.id, action: 'updated', entity: 'security', description: 'Changed password' });
   res.json({ message: 'Password updated' });
 }));

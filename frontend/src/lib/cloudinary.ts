@@ -8,7 +8,7 @@ interface SignaturePayload {
   folder: string;
 }
 
-/** Uploads a single image file directly to Cloudinary (into the "agrajatra"
+/** Uploads a single image file directly to Cloudinary (into the "panovia"
  *  folder) using a short-lived signature from our backend, and returns the
  *  secure URL. Called only when the user saves the form. */
 export async function uploadImage(file: File): Promise<string> {

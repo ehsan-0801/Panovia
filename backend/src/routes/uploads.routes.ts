@@ -10,7 +10,7 @@ uploadsRouter.use(requireAuth);
 
 /** POST /uploads/signature — returns a short-lived signature so the browser can
  *  upload an image directly to Cloudinary (the API secret never leaves the
- *  server). All uploads land in the configured folder ("agrajatra"). */
+ *  server). All uploads land in the configured folder ("panovia"). */
 uploadsRouter.post(
   '/signature',
   asyncHandler(async (_req, res) => {

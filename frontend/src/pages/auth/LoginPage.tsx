@@ -9,11 +9,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PasswordInput } from '@/components/ui/password-input';
-import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/store/auth';
 
 export function LoginPage() {
-  const { user } = useAuth();
+  const { user, signIn } = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -24,10 +23,14 @@ export function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
-    if (error) return toast.error(error.message);
-    navigate('/dashboard');
+    try {
+      await signIn(email, password);
+      navigate('/dashboard');
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Sign in failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -70,7 +73,7 @@ export function AuthShell({ title, subtitle, children }: { title: string; subtit
         <div className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -left-10 h-80 w-80 rounded-full bg-teal-300/20 blur-3xl" />
         <Link to="/" className="relative">
-          <img src="/logo-dark.png" alt="AgroJatra ERP" className="h-9 w-auto" />
+          <img src="/PanoviaLogo-dark.png" alt="Panovia" className="h-9 w-auto" />
         </Link>
         <div className="relative max-w-md">
           <h2 className="font-display text-4xl font-bold leading-tight">{t('auth.panel.headline')}</h2>

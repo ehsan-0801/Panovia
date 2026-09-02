@@ -7,13 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PasswordInput } from '@/components/ui/password-input';
-import { api } from '@/lib/api';
-import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/store/auth';
 import { AuthShell } from './LoginPage';
 
 export function RegisterPage() {
-  const { user } = useAuth();
+  const { user, signUp } = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [form, setForm] = useState({ full_name: '', email: '', password: '' });
@@ -25,9 +23,7 @@ export function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await api.post('/auth/register', form);
-      const { error } = await supabase.auth.signInWithPassword({ email: form.email, password: form.password });
-      if (error) throw error;
+      await signUp(form);
       navigate('/onboarding');
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Registration failed');

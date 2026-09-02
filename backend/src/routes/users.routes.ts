@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { z } from 'zod';
 import { env } from '../config/env.js';
-import { supabaseAdmin } from '../config/supabase.js';
 import { query } from '../db/pool.js';
 import { logActivity } from '../lib/activity.js';
+import { hashPassword } from '../lib/auth.js';
 import { emailLayout, sendEmail } from '../lib/email.js';
 import { ROLES, ROLE_LABELS } from '../lib/permissions.js';
 import { requireAuth } from '../middleware/auth.js';
@@ -60,20 +60,16 @@ usersRouter.post('/', requirePermission('users', 'create'), asyncHandler(async (
   if (count >= MEMBER_LIMIT) throw new ApiError(409, `Member limit reached (${MEMBER_LIMIT} per organization)`);
 
   // Reuse an existing account if the email is already registered, otherwise create one.
-  const existing = (await query<{ id: string }>('select id from public.users where email=$1', [body.email.toLowerCase()])).rows[0];
+  const existing = (await query<{ id: string }>('select id from public.users where lower(email)=$1', [body.email.toLowerCase()])).rows[0];
   let userId: string;
   if (existing) {
     userId = existing.id;
   } else {
-    const { data, error } = await supabaseAdmin.auth.admin.createUser({
-      email: body.email, password: body.password, email_confirm: true, user_metadata: { full_name: body.full_name },
-    });
-    if (error || !data.user) throw new ApiError(400, error?.message ?? 'Could not create user');
-    userId = data.user.id;
-    await query(
-      `insert into public.users (id, email, full_name, phone) values ($1,$2,$3,$4)
-       on conflict (id) do update set full_name=coalesce(excluded.full_name, public.users.full_name)`,
-      [userId, body.email.toLowerCase(), body.full_name ?? null, body.phone ?? null]);
+    userId = (await query<{ id: string }>(
+      `insert into public.users (email, password_hash, full_name, phone) values ($1,$2,$3,$4)
+       returning id`,
+      [body.email.toLowerCase(), await hashPassword(body.password), body.full_name ?? null, body.phone ?? null],
+    )).rows[0].id;
   }
 
   const already = (await query('select 1 from public.memberships where organization_id=$1 and user_id=$2', [org, userId])).rows[0];
@@ -88,7 +84,7 @@ usersRouter.post('/', requirePermission('users', 'create'), asyncHandler(async (
   const orgName = req.ctx!.memberships.find((m) => m.organization_id === org)?.organization_name ?? 'your organization';
   await sendEmail({
     to: body.email,
-    subject: `You've been added to ${orgName} on AgroJatra ERP`,
+    subject: `You've been added to ${orgName} on Panovia`,
     html: emailLayout('Welcome to the team', `
       <p>You've been added to <strong>${orgName}</strong> as <strong>${ROLE_LABELS[body.role]}</strong>.</p>
       ${existing ? '' : '<p>Your administrator has set up your account. Ask them for your password, or use “Forgot password” on the sign-in page to choose your own.</p>'}

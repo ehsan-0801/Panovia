@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { bn, en } from './translations';
 
-export const LANG_KEY = 'agrojatra-lang';
+export const LANG_KEY = 'panovia-lang';
 export type Lang = 'en' | 'bn';
 
 const stored = (localStorage.getItem(LANG_KEY) as Lang) || 'en';

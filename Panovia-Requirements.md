@@ -1,11 +1,11 @@
-# AgroJatra ERP - Software Requirements Specification (SRS)
+# Panovia - Software Requirements Specification (SRS)
 
 ## Project Overview
-**Project Name:** AgroJatra ERP
+**Project Name:** Panovia
 
 **Tagline:** *Everything Your Business Needs in One Place.*
 
-AgroJatra ERP is a modern, web-based ERP solution for small and medium businesses in Bangladesh. It centralizes inventory, purchasing, sales, customers, suppliers, reporting, and business analytics into a single platform.
+Panovia is a modern, web-based ERP solution for small and medium businesses in Bangladesh. It centralizes inventory, purchasing, sales, customers, suppliers, reporting, and business analytics into a single platform.
 
 ---
 
@@ -196,9 +196,9 @@ Export:
 
 # Branding
 
-**Name:** AgroJatra ERP
+**Name:** Panovia
 
-**Meaning:** "AgroJatra" symbolizes a journey of growth and progress. Although inspired by the Bengali word "অগ্রযাত্রা" (forward journey), the platform is suitable for businesses across industries—not just agriculture.
+**Meaning:** "Panovia" symbolizes a journey of growth and progress. Although inspired by the Bengali word "অগ্রযাত্রা" (forward journey), the platform is suitable for businesses across industries—not just agriculture.
 
 **Suggested Colors**
 - Emerald (#10B981)

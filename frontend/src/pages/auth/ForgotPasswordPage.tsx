@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { supabase } from '@/lib/supabase';
+import { api } from '@/lib/api';
 import { AuthShell } from './LoginPage';
 
 export function ForgotPasswordPage() {
@@ -15,9 +15,14 @@ export function ForgotPasswordPage() {
   const [sent, setSent] = useState(false);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/reset-password` });
-    if (error) return toast.error(error.message);
-    setSent(true);
+    try {
+      // The API always answers the same way, so this never reveals whether the
+      // address is registered — the confirmation panel shows either way.
+      await api.post('/auth/forgot-password', { email });
+      setSent(true);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Could not send the reset link');
+    }
   };
   return (
     <AuthShell title={t('auth.forgot.title')} subtitle={t('auth.forgot.subtitle')}>

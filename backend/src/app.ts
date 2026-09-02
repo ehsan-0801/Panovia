@@ -3,6 +3,7 @@ import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { env } from './config/env.js';
+import { pingDb } from './db/pool.js';
 import { errorHandler, notFound } from './middleware/error.js';
 import { accountsRouter } from './routes/accounts.routes.js';
 import { activityRouter } from './routes/activity.routes.js';
@@ -33,7 +34,16 @@ export function createApp() {
   app.use(express.json({ limit: '2mb' }));
   app.use(morgan(env.nodeEnv === 'production' ? 'combined' : 'dev'));
 
-  app.get('/health', (_req, res) => res.json({ status: 'ok', service: 'agrojatra-erp-api' }));
+  // Reports the database too — a green health check that can't reach Postgres
+  // is what made the last outage look like an application bug.
+  app.get('/health', async (_req, res) => {
+    const db = await pingDb();
+    res.status(db ? 200 : 503).json({
+      status: db ? 'ok' : 'degraded',
+      service: 'panovia-api',
+      database: db ? 'up' : 'down',
+    });
+  });
 
   const api = express.Router();
   api.use('/auth', authRouter);

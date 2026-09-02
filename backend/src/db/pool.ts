@@ -1,40 +1,43 @@
 import pg from 'pg';
 import { env } from '../config/env.js';
 
-// Strip libpq SSL params from the URL so they don't force `verify-full`;
-// we control TLS explicitly via the `ssl` option below (Supabase uses a
-// certificate chain that isn't in Node's default trust store).
+// Neon presents a publicly-trusted certificate, so the default TLS verification
+// that `sslmode=require` maps to in node-postgres works as-is — no custom CA and
+// no `rejectUnauthorized: false`. `channel_binding` is a libpq-only parameter
+// that node-postgres doesn't understand, so it's stripped here.
 function cleanUrl(url: string): string {
   const u = new URL(url);
-  u.searchParams.delete('sslmode');
+  u.searchParams.delete('channel_binding');
   u.searchParams.delete('supa');
   return u.toString();
 }
 
 export const pool = new pg.Pool({
   connectionString: cleanUrl(env.databaseUrl),
-  ssl: { rejectUnauthorized: false },
   max: 10,
-  // Keep connections warm so we don't pay a fresh TLS handshake to the
-  // Supabase DB (us-east-1) on every request after a short idle period —
-  // that handshake is what caused the occasional multi-second responses.
   keepAlive: true,
-  idleTimeoutMillis: 60_000,
+  // Neon's pooler is happy to hand connections back quickly, and letting idle
+  // ones close lets the compute endpoint suspend (which is what keeps the free
+  // tier's compute-hour budget from being burnt by an idle server).
+  idleTimeoutMillis: 30_000,
   connectionTimeoutMillis: 15_000,
 });
-
-// Prime one connection at startup so the first request is fast, and keep at
-// least one connection alive with a lightweight periodic ping.
-pool.query('select 1').catch(() => {});
-setInterval(() => {
-  pool.query('select 1').catch(() => {});
-}, 50_000).unref();
 
 export async function query<T extends pg.QueryResultRow = pg.QueryResultRow>(
   text: string,
   params?: unknown[],
 ): Promise<pg.QueryResult<T>> {
   return pool.query<T>(text, params as never);
+}
+
+/** True when the database is reachable — used by the health endpoint. */
+export async function pingDb(): Promise<boolean> {
+  try {
+    await pool.query('select 1');
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /** Run a set of statements inside a single transaction. */

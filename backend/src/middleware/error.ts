@@ -19,6 +19,12 @@ export function errorHandler(err: unknown, _req: Request, res: Response, _next: 
   if (pgCode === '23505') {
     return res.status(409).json({ error: 'A record with these unique values already exists' });
   }
+  // Database unreachable (host down, credentials rejected, connection refused)
+  // → 503, so an infrastructure outage is distinguishable from a code bug.
+  if (pgCode && ['XX000', 'ECONNREFUSED', 'ENOTFOUND', 'ETIMEDOUT', '57P01', '53300', '28P01'].includes(pgCode)) {
+    console.error('Database unavailable:', err);
+    return res.status(503).json({ error: 'Database temporarily unavailable. Please try again shortly.' });
+  }
   console.error('Unhandled error:', err);
   return res.status(500).json({ error: 'Internal server error' });
 }

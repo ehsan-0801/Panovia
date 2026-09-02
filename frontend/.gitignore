@@ -1,9 +1,12 @@
 node_modules
 dist
-.env
-.env.local
 *.log
 .DS_Store
 
 # build cache
 *.tsbuildinfo
+
+# Env files: only the placeholder template is committed.
+.env
+.env.*
+!.env.example

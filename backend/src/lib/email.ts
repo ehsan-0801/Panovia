@@ -22,9 +22,9 @@ export async function sendEmail(opts: { to: string; subject: string; html: strin
 /** Minimal branded wrapper for transactional emails. */
 export function emailLayout(title: string, body: string): string {
   return `<div style="font-family:system-ui,Segoe UI,Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px;color:#0f172a">
-    <h1 style="font-size:20px;margin:0 0 4px">AgroJatra ERP</h1>
+    <h1 style="font-size:20px;margin:0 0 4px">Panovia</h1>
     <h2 style="font-size:16px;font-weight:600;margin:16px 0 8px">${title}</h2>
     <div style="font-size:14px;line-height:1.6;color:#334155">${body}</div>
-    <p style="margin-top:24px;font-size:12px;color:#94a3b8">— AgroJatra ERP</p>
+    <p style="margin-top:24px;font-size:12px;color:#94a3b8">— Panovia</p>
   </div>`;
 }

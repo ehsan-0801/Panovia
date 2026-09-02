@@ -35,13 +35,13 @@ const STATS = [
 ] as const;
 
 const WORKFLOW = [
-  { icon: Boxes, k: 'products', img: '/agrajatra/inventory.png' },
-  { icon: Truck, k: 'suppliers', img: '/agrajatra/suppliers.png' },
-  { icon: ShoppingCart, k: 'purchases', img: '/agrajatra/purchase.png' },
-  { icon: Users, k: 'customers', img: '/agrajatra/Customer.png' },
-  { icon: BarChart3, k: 'sales', img: '/agrajatra/Sale.png' },
-  { icon: FileText, k: 'invoices', img: '/agrajatra/invoice.png' },
-  { icon: TrendingUp, k: 'reports', img: '/agrajatra/Reports.png' },
+  { icon: Boxes, k: 'products', img: '/panovia/inventory.png' },
+  { icon: Truck, k: 'suppliers', img: '/panovia/suppliers.png' },
+  { icon: ShoppingCart, k: 'purchases', img: '/panovia/purchase.png' },
+  { icon: Users, k: 'customers', img: '/panovia/Customer.png' },
+  { icon: BarChart3, k: 'sales', img: '/panovia/Sale.png' },
+  { icon: FileText, k: 'invoices', img: '/panovia/invoice.png' },
+  { icon: TrendingUp, k: 'reports', img: '/panovia/Reports.png' },
 ] as const;
 
 /** Draggable workflow node graph — each card holds its image + text together,
@@ -308,7 +308,7 @@ export function HomePage() {
             <Card className="overflow-hidden shadow-xl">
               <div className="flex items-center gap-2 border-b bg-muted/40 px-4 py-3">
                 <div className="flex gap-1.5">{['bg-red-400', 'bg-amber-400', 'bg-emerald-400'].map((c) => <span key={c} className={`h-3 w-3 rounded-full ${c}`} />)}</div>
-                <span className="ml-2 text-xs text-muted-foreground">app.agrojatra.com/dashboard</span>
+                <span className="ml-2 text-xs text-muted-foreground">app.panovia.com/dashboard</span>
               </div>
               <CardContent className="space-y-4 p-5">
                 <div className="grid grid-cols-3 gap-3">

@@ -1,4 +1,4 @@
-# AgroJatra ERP — Demo Credentials
+# Panovia — Demo Credentials
 
 Seeded by `cd backend && npm run seed`. **All demo accounts share the same password.**
 
@@ -9,11 +9,11 @@ Seeded by `cd backend && npm run seed`. **All demo accounts share the same passw
 
 | Email | Role | What they can do |
 |-------|------|------------------|
-| `admin@agrojatra.com` | **Admin** | Everything — all modules (CRUD), Users, Roles, Company Settings, all reports + export |
-| `inventory@agrojatra.com` | **Inventory Manager** | Products & Categories (add/edit, no delete), Suppliers & Purchases (CRUD); inventory reports |
-| `sales@agrojatra.com` | **Sales Manager** | Customers & Sales (CRUD), create invoices; sales & customer reports |
-| `accountant@agrojatra.com` | **Accountant** | View purchases & sales; financial reports + CSV export; **Accounts** module (revenue, COGS, gross profit, receivables + transaction ledger) |
-| `viewer@agrojatra.com` | **Viewer** | Read-only across the app; can view all reports (no export) |
+| `admin@panovia.com` | **Admin** | Everything — all modules (CRUD), Users, Roles, Company Settings, all reports + export |
+| `inventory@panovia.com` | **Inventory Manager** | Products & Categories (add/edit, no delete), Suppliers & Purchases (CRUD); inventory reports |
+| `sales@panovia.com` | **Sales Manager** | Customers & Sales (CRUD), create invoices; sales & customer reports |
+| `accountant@panovia.com` | **Accountant** | View purchases & sales; financial reports + CSV export; **Accounts** module (revenue, COGS, gross profit, receivables + transaction ledger) |
+| `viewer@panovia.com` | **Viewer** | Read-only across the app; can view all reports (no export) |
 
 ## Notes
 - The **first user to register** (via `/register`) automatically becomes **Admin**; every later self-registration is created as **Viewer** for an Admin to promote.

@@ -12,7 +12,7 @@ export function ContactPage() {
   const [sent, setSent] = useState(false);
 
   const CONTACTS = [
-    { icon: Mail, label: t('contact.email'), value: 'hello@agrojatra.com' },
+    { icon: Mail, label: t('contact.email'), value: 'hello@panovia.com' },
     { icon: Phone, label: t('contact.phone'), value: '+880 1700-000000' },
     { icon: MapPin, label: t('contact.location'), value: 'Dhaka, Bangladesh' },
   ];
